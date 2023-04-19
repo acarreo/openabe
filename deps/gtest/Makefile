@@ -8,6 +8,7 @@ all: package googletest-release-$(VERSION)/.built
 
 DEST_LIBDIR := $(DEPS_INSTALL_ZROOT)/lib
 DEST_INCLUDEDIR := $(DEPS_INSTALL_ZROOT)/include
+LD_LIBRARY_PATH := /usr/local/lib
 
 package:
 	./download_gtest.sh $(VERSION)
