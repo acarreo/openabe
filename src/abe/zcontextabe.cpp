@@ -90,8 +90,9 @@ OpenABEContextABE::initializeCurve(const string groupParams) {
  */
 OpenABEContextSchemeCPA::OpenABEContextSchemeCPA(unique_ptr<OpenABEContextABE> kem_) : ZObject() {
   ASSERT_NOTNULL(kem_.get());
-  if (kem_->getSchemeType() == OpenABE_SCHEME_KP_GPSW ||
-             kem_->getSchemeType() == OpenABE_SCHEME_CP_WATERS) {
+  if (kem_->getSchemeType() == OpenABE_SCHEME_KP_GPSW
+      || kem_->getSchemeType() == OpenABE_SCHEME_KP_DPVS
+      || kem_->getSchemeType() == OpenABE_SCHEME_CP_WATERS) {
     this->isMAABE = false;
   } else {
     /* unrecognized scheme type */

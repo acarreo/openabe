@@ -83,6 +83,7 @@ typedef enum _OpenABE_SCHEME {
   OpenABE_SCHEME_PK_OPDH = 100,
   OpenABE_SCHEME_CP_WATERS = 101,
   OpenABE_SCHEME_KP_GPSW = 102,
+  OpenABE_SCHEME_KP_DPVS = 103,
   OpenABE_SCHEME_CP_WATERS_CCA = 201,
   OpenABE_SCHEME_KP_GPSW_CCA = 202
 } OpenABE_SCHEME;
@@ -169,6 +170,7 @@ const std::string DEFAULT_EC_PARAM = "NIST_P256";
 #define OpenABE_EC_DSA "EC-DSA"
 #define OpenABE_PK_ENC "PK-ENC"
 #define OpenABE_CP_ABE "CP-ABE"
+#define OpenABE_KP_DPVS "KP-DPVS"
 #define OpenABE_KP_ABE "KP-ABE"
 #define OpenABE_MA_ABE "MA-ABE"
 

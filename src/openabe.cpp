@@ -194,6 +194,9 @@ OpenABEContextABE *OpenABE_createContextABE(unique_ptr<OpenABERNG> *rng,
   case OpenABE_SCHEME_KP_GPSW:
     newContext = (OpenABEContextABE *)new OpenABEContextKPGPSW(move(*rng));
     break;
+  case OpenABE_SCHEME_KP_DPVS:
+    newContext = (OpenABEContextABE *)new OpenABEContextKPDPVS(move(*rng));
+    break;
   default:
     // gErrorLog.log("Could not instantiate unknown scheme type", __LINE__,
     // __FILE__);
@@ -384,6 +387,7 @@ OpenABE_SCHEME OpenABE_getSchemeID(uint8_t id) {
   case OpenABE_SCHEME_PK_OPDH:
   case OpenABE_SCHEME_CP_WATERS:
   case OpenABE_SCHEME_KP_GPSW:
+  case OpenABE_SCHEME_KP_DPVS:
   case OpenABE_SCHEME_CP_WATERS_CCA:
   case OpenABE_SCHEME_KP_GPSW_CCA:
     schemeID = (OpenABE_SCHEME)id;
@@ -414,6 +418,9 @@ const string OpenABE_convertSchemeIDToString(OpenABE_SCHEME id) {
   case OpenABE_SCHEME_KP_GPSW:
     scheme = OpenABE_KP_ABE;
     break;
+  case OpenABE_SCHEME_KP_DPVS:
+    scheme = OpenABE_KP_DPVS;
+    break;
   default:
     throw OpenABE_ERROR_INVALID_SCHEME_ID;
   }
@@ -429,6 +436,8 @@ OpenABE_SCHEME OpenABE_convertStringToSchemeID(const string id) {
         return OpenABE_SCHEME_CP_WATERS;
     } else if (id == OpenABE_KP_ABE) {
         return OpenABE_SCHEME_KP_GPSW;
+    } else if (id == OpenABE_KP_DPVS) {
+        return OpenABE_SCHEME_KP_DPVS;
     } else {
         return OpenABE_SCHEME_NONE;
     }
