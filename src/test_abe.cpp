@@ -500,7 +500,7 @@ protected:
     unique_ptr<OpenABEFunctionInput> getEncInput(OpenABE_SCHEME type, const string func_input) {
         if(type == OpenABE_SCHEME_CP_WATERS)
             return createPolicyTree(func_input);
-        else if(type == OpenABE_SCHEME_KP_GPSW)
+        else if(type == OpenABE_SCHEME_KP_GPSW || type == OpenABE_SCHEME_KP_DPVS)
             return createAttributeList(func_input);
         return nullptr;
     }
@@ -508,7 +508,7 @@ protected:
     unique_ptr<OpenABEFunctionInput> getKeyInput(OpenABE_SCHEME type, string key_input) {
         if(type == OpenABE_SCHEME_CP_WATERS)
             return createAttributeList(key_input);
-        else if(type == OpenABE_SCHEME_KP_GPSW)
+        else if(type == OpenABE_SCHEME_KP_GPSW || type == OpenABE_SCHEME_KP_DPVS)
             return createPolicyTree(key_input);
         return nullptr;
     }
@@ -519,6 +519,8 @@ protected:
                 return "CP-ABE"; break;
             case OpenABE_SCHEME_KP_GPSW:
                 return "KP-ABE"; break;
+            case OpenABE_SCHEME_KP_DPVS:
+                return "KP-DPVS"; break;
             default:
                 break;
         }
@@ -728,7 +730,10 @@ INSTANTIATE_TEST_CASE_P(ABETest1, CPASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and (Charlie or David))", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest2, CPASecurityForSchemeTest,
@@ -738,7 +743,10 @@ INSTANTIATE_TEST_CASE_P(ABETest2, CPASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice and Bob) or uid:567abc)", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest3, CPASecurityForSchemeTest,
@@ -748,7 +756,10 @@ INSTANTIATE_TEST_CASE_P(ABETest3, CPASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and Date = May 1-10, 2016)", "Bob|Eve|Date=May 12, 2016", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
     Input(OpenABE_SCHEME_KP_GPSW, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest4, CCASecurityForKEMTest,
@@ -758,7 +769,10 @@ INSTANTIATE_TEST_CASE_P(ABETest4, CCASecurityForKEMTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and (Charlie or David))", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest5, CCASecurityForKEMTest,
@@ -768,7 +782,10 @@ INSTANTIATE_TEST_CASE_P(ABETest5, CCASecurityForKEMTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice and Bob) or uid:567abc)", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest6, CCASecurityForKEMTest,
@@ -778,7 +795,10 @@ INSTANTIATE_TEST_CASE_P(ABETest6, CCASecurityForKEMTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and Date = May 1-10, 2016)", "Bob|Eve|Date=May 12, 2016", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
     Input(OpenABE_SCHEME_KP_GPSW, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
 ));
 
 
@@ -789,7 +809,10 @@ INSTANTIATE_TEST_CASE_P(ABETest7, CCASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and (Charlie or David))", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest8, CCASecurityForSchemeTest,
@@ -799,7 +822,10 @@ INSTANTIATE_TEST_CASE_P(ABETest8, CCASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice and Bob) or uid:567abc)", "Bob|Eve", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
     Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and (Charlie or David)) and Alice", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice or Bob) and Alice)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|uid:567abcdef", "((Alice and Bob) and Charlie)", false)
 ));
 
 INSTANTIATE_TEST_CASE_P(ABETest9, CCASecurityForSchemeTest,
@@ -809,7 +835,10 @@ INSTANTIATE_TEST_CASE_P(ABETest9, CCASecurityForSchemeTest,
     Input(OpenABE_SCHEME_CP_WATERS, "((Alice or Bob) and Date = May 1-10, 2016)", "Bob|Eve|Date=May 12, 2016", false),
     Input(OpenABE_SCHEME_KP_GPSW, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
     Input(OpenABE_SCHEME_KP_GPSW, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
-    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
+    Input(OpenABE_SCHEME_KP_GPSW, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false),
+    Input(OpenABE_SCHEME_KP_DPVS, "Charlie|Date = June 12, 2014", "(Date = June 10-20, 2014 and (Charlie or David))", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "David|Date = June 25, 2014", "((David or Bob) and Date = June 21-28, 2014)", true),
+    Input(OpenABE_SCHEME_KP_DPVS, "Alice|Charlie|Date = June 30, 2014", "((Alice and Date = June 21-28, 2014) and Charlie)", false)
 ));
 
 class SatInput {
