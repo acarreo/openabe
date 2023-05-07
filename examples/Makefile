@@ -13,10 +13,13 @@ CXXFLAGS = $(CXX11FLAGS) $(OS_CXXFLAGS) -pthread -Wall -g -O2 -DSSL_LIB_INIT -I$
 LDFLAGS = -L${ZROOT}/deps/root/lib -L${ZROOT}/root/lib $(LOC_LIB)
 LIBS = -lcrypto -lrelic -lrelic_ec -lopenabe
 
-all: test_kp test_cp test_pk test_km
+all: test_kp test_cp test_pk test_dpvs test_km
 
 test_kp: test_kp.o
 	$(CXX) -o test_kp $(CXXFLAGS) $(LDFLAGS) test_kp.cpp $(LIBS)
+
+test_dpvs: test_dpvs.o
+	$(CXX) -o test_dpvs $(CXXFLAGS) $(LDFLAGS) test_dpvs.cpp $(LIBS)
 
 test_cp: test_cp.o
 	$(CXX) -o test_cp $(CXXFLAGS) $(LDFLAGS) test_cp.cpp $(LIBS)
@@ -29,9 +32,10 @@ test_km: test_km.o
 
 test:
 	./test_kp
+	./test_dpvs
 	./test_cp
 	./test_pk
 	./test_km
 
 clean:
-	rm -rf *.o *.dSYM test_kp test_cp test_pk test_km
+	rm -rf *.o *.dSYM test_kp test_dpvs test_cp test_pk test_km
