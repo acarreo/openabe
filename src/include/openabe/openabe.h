@@ -85,7 +85,8 @@ typedef enum _OpenABE_SCHEME {
   OpenABE_SCHEME_KP_GPSW = 102,
   OpenABE_SCHEME_KP_DPVS = 103,
   OpenABE_SCHEME_CP_WATERS_CCA = 201,
-  OpenABE_SCHEME_KP_GPSW_CCA = 202
+  OpenABE_SCHEME_KP_GPSW_CCA = 202,
+  OpenABE_SCHEME_KP_DPVS_CCA = 203
 } OpenABE_SCHEME;
 
 //
@@ -147,6 +148,7 @@ extern "C" {
 #include <openabe/zcontextcca.h>
 #include <openabe/low/abe/zcontextcpwaters.h>
 #include <openabe/low/abe/zcontextkpgpsw.h>
+#include <openabe/low/abe/zcontextkpdpvs.h>
 #include <openabe/utils/zdriver.h>
 #include <openabe/utils/zkeymgr.h>
 #include <openabe/utils/zx509.h>

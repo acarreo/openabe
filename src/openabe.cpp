@@ -390,6 +390,7 @@ OpenABE_SCHEME OpenABE_getSchemeID(uint8_t id) {
   case OpenABE_SCHEME_KP_DPVS:
   case OpenABE_SCHEME_CP_WATERS_CCA:
   case OpenABE_SCHEME_KP_GPSW_CCA:
+  case OpenABE_SCHEME_KP_DPVS_CCA:
     schemeID = (OpenABE_SCHEME)id;
     break;
   default:

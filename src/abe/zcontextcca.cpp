@@ -367,6 +367,8 @@ OpenABEContextSchemeCCA::OpenABEContextSchemeCCA(unique_ptr<OpenABEContextCCA> k
   // upgrade the scheme type according to input KEM type
   if (kem_->getSchemeType() == OpenABE_SCHEME_KP_GPSW) {
     scheme_type = OpenABE_SCHEME_KP_GPSW_CCA;
+  } else if (kem_->getSchemeType() == OpenABE_SCHEME_KP_DPVS) {
+    scheme_type = OpenABE_SCHEME_KP_DPVS_CCA;
   } else if (kem_->getSchemeType() == OpenABE_SCHEME_CP_WATERS) {
     scheme_type = OpenABE_SCHEME_CP_WATERS_CCA;
   } else {

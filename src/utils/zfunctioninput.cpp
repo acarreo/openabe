@@ -92,7 +92,9 @@ unique_ptr<OpenABEFunctionInput> getFunctionInput(OpenABECiphertext *ciphertext)
                createPolicyTree(policy_str->toString()));
     break;
   case OpenABE_SCHEME_KP_GPSW:
+  case OpenABE_SCHEME_KP_DPVS:
   case OpenABE_SCHEME_KP_GPSW_CCA:
+  case OpenABE_SCHEME_KP_DPVS_CCA:
     attrList = (OpenABEAttributeList *)ciphertext->getComponent("attributes");
     ASSERT_NOTNULL(attrList);
     return unique_ptr<OpenABEFunctionInput>(

@@ -66,8 +66,8 @@ OpenABECryptoContext::OpenABECryptoContext(const std::string scheme_id, bool bas
   if (scheme_type_ == OpenABE_SCHEME_CP_WATERS) {
     keyInputType_ = FUNC_ATTRLIST_INPUT;
     encInputType_ = FUNC_POLICY_INPUT;
-  } else {
-    // OpenABE_SCHEME_KP_GPSW
+  } else if (scheme_type_ == OpenABE_SCHEME_KP_GPSW || scheme_type_ == OpenABE_SCHEME_KP_DPVS) {
+    // OpenABE_SCHEME_KP_GPSW or OpenABE_SCHEME_KP_GPSW
     keyInputType_ = FUNC_POLICY_INPUT;
     encInputType_ = FUNC_ATTRLIST_INPUT;
   }
