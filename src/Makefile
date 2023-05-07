@@ -16,7 +16,7 @@ GTESTLIBS  = -lgtest -lpthread
 OABE_SHLIB = libopenabe.$(SHLIB)
 OABE_KEYS = keys/zkdf.o keys/zkey.o keys/zpkey.o keys/zkeystore.o keys/zsymkey.o
 OABE_LOW = ske/zcontextske.o pke/zcontextpke.o pksig/zcontextpksig.o \
-          abe/zcontextabe.o abe/zcontextcca.o abe/zcontextcpwaters.o abe/zcontextkpgpsw.o
+          abe/zcontextabe.o abe/zcontextcca.o abe/zcontextcpwaters.o abe/zcontextkpgpsw.o abe/zcontextkpdpvs.o
 OABE_TOOLS = tools/zlsss.o tools/zprng.o 
 OABE_ZML = zml/zgroup.o zml/zpairing.o zml/zelliptic.o zml/zelement.o zml/zelement_ec.o zml/zelement_bp.o
 OABE_UTILS = utils/zkeymgr.o utils/zcryptoutils.o utils/zcontainer.o utils/zbenchmark.o utils/zerror.o utils/zcontainer.o \
@@ -27,7 +27,7 @@ OABE_OBJ_TARGETS = zobject.o openabe.o zcontext.o zcrypto_box.o zsymcrypto.o zpa
 
 OABE_OBJ_FILES = zobject.o openabe.o zgroup.o zlsss.o zerror.o zpairing.o zelliptic.o zelement.o zelement_ec.o zelement_bp.o zcontainer.o zciphertext.o \
 	     zkey.o zpkey.o zkeystore.o zfunctioninput.o zcontext.o zpolicy.o zsymkey.o zprng.o zattributelist.o \
-	     zcontextske.o zcontextpke.o zcontextpksig.o zcontextabe.o zcontextcpwaters.o zcontextkpgpsw.o \
+	     zcontextske.o zcontextpke.o zcontextpksig.o zcontextabe.o zcontextcpwaters.o zcontextkpgpsw.o zcontextkpdpvs.o \
 	     zcontextcca.o zkdf.o zkeymgr.o zcryptoutils.o zcrypto_box.o zbenchmark.o zparser.o zscanner.o zdriver.o zsymcrypto.o \
 	     openssl_init.o $(OS_OBJS)
 	     
@@ -49,7 +49,8 @@ GENFILES = location.hh position.hh stack.hh *.tab.* zscanner.cpp
 
 PROGRAMS = test_libopenabe test_zml test_zml1 test_zml2 test_policy test_abe test_pke test_ske test_zsym test_keystore bench_libopenabe profile_libopenabe fuzz_policy fuzz_attrlist
 
-all: $(OABELIB) $(ZSYMLIB) $(PROGRAMS)
+# all: $(OABELIB) $(ZSYMLIB) $(PROGRAMS)
+all: $(OABELIB)
 
 zml/zelement.o:
 	$(CC) $(CCFLAGS) -c zml/zelement.c -o zelement.o
